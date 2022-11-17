@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-o-_=8#0i)t&ha&jj1z32v1!d$zi%#1p_91+1y@372vx5+k_32b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://multivendy-backend-production.up.railway.app', 'localhost']
+ALLOWED_HOSTS = ['multivendy-backend-production.up.railway.app', 'localhost']
 
 CSRF_TRUSTED_ORIGINS = ['https://multivendy-backend-production.up.railway.app']
 # Application definition
