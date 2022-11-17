@@ -153,12 +153,13 @@ REST_FRAMEWORK = {
 
 }
 
+CORS_ORIGIN_ALLOW_ALL = True
 
-CORS_ALLOWED_ORIGINS = [
-    "https://monumental-froyo-aac200.netlify.app"
+# CORS_ALLOWED_ORIGINS = [
+#     "https://monumental-froyo-aac200.netlify.app"
     
     
-]
+# ]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
