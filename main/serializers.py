@@ -6,13 +6,13 @@ from . import models
 class VendorSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Vendor
-        fields = ['user', 'address'] 
+        fields = ['id','first_name', 'last_name', 'email', 'password'] 
 
 
 class VendorDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Vendor
-        fields = ['id','user', 'address']         
+        fields = ['id','first_name', 'last_name', 'email', 'password', 'phone', 'address']         
     def __init__(self, *args, **kwargs):
         super(VendorDetailSerializer, self).__init__ (*args, **kwargs)
         self.Meta.depth = 1
@@ -52,7 +52,7 @@ class CategoryDetailSerializer(serializers.ModelSerializer):
     # Category_rating = serializers.StringRelatedField(many=True, read_only=True)
     class Meta:
         model = models.ProductCategory
-        fields = ['id','title', 'detail']         
+        fields = ['id','title', 'details']         
     def __init__(self, *args, **kwargs):
         super(CategoryDetailSerializer, self).__init__ (*args, **kwargs)
         self.Meta.depth = 1
@@ -62,13 +62,13 @@ class CategoryDetailSerializer(serializers.ModelSerializer):
 class CustomerListSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Customer
-        fields = ['id','user', 'phone']         
+        fields = ['first_name', 'last_name', 'email', 'password']         
 
 
 class CustomerDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Customer
-        fields = ['id','user', 'phone']         
+        fields = ['id','first_name', 'last_name', 'email', 'password', 'phone', 'address']         
     def __init__(self, *args, **kwargs):
         super(CustomerDetailSerializer, self).__init__ (*args, **kwargs)
         self.Meta.depth = 1

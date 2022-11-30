@@ -90,25 +90,25 @@ WSGI_APPLICATION = 'backend_api.wsgi.application'
 # db_from_env = dj_database_url.config(conn_max_age=500)
 # DATABASES = ['default'].update(db_from_env)
 
-# DATABASES = {
-#     'default': {
-#         # 'ENGINE': 'django.db.backends.sqlite3',
-#         # 'NAME': BASE_DIR / 'db.sqlite3',
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'multivendor',
-#         'USER': 'postgres',
-#         'PASSWORD': 'wale2003',
-#         'HOST': '127.0.0.1',
-#         'PORT': '5432'
-
-#     }
-# }
-
-DATABASE_URL = os.getenv("DATABASE_URL")
-
 DATABASES = {
-    "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
+    'default': {
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'multivendor',
+        'USER': 'postgres',
+        'PASSWORD': 'wale2003',
+        'HOST': '127.0.0.1',
+        'PORT': '5432'
+
+    }
 }
+
+# DATABASE_URL = os.getenv("DATABASE_URL")
+
+# DATABASES = {
+#     "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
+# }
 
 # DATABASES = {
 #     'default': {

@@ -9,21 +9,34 @@ from rest_framework import filters
 
 
 
-class VendorList(generics.ListCreateAPIView):
+class VendorViewSet(viewsets.ModelViewSet):
     queryset = models.Vendor.objects.all()
-    serializer_class = serializers.VendorSerializer
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return serializers.VendorDetailSerializer
+        return serializers.VendorSerializer    
     # permission_classes = [permissions.IsAuthenticated]
 
 
-class VendorDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.Vendor.objects.all()
-    serializer_class = serializers.VendorDetailSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = models.Products.objects.all().order_by('-date_added')
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return serializers.ProductDetailSerializer
+        return serializers.ProductListSerializer 
 
 
-class ProductList(generics.ListCreateAPIView):
-    queryset = models.Products.objects.all().order_by('-date_added')[:6]
-    serializer_class = serializers.ProductListSerializer  
+
+class RelatedProductDetailViewSet(generics.ListAPIView):
+    serializer_class = serializers.ProductDetailSerializer
+    def get_queryset(self):
+        return models.Products.objects.filter(category__id=self.kwargs['category__id'])
+
+
+
+
+
 
     # permission_classes = [permissions.IsAuthenticated]
 
@@ -34,14 +47,8 @@ class ProductList(generics.ListCreateAPIView):
     #     qs = qs.filter(category=category)
         # return qs
 
-class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.Products.objects.all()
-    # related_product = Products.objects.filter(category__in=product.category.all()).exclude(slug=slug).distinct()[:3]
-    serializer_class = serializers.ProductDetailSerializer
 
-    # permission_classes = [permissions.IsAuthenticated]
-
-class ProductListByCategory(generics.ListCreateAPIView):
+class ProductListByCategoryViewSet(viewsets.ModelViewSet):
     queryset = models.Products.objects.all()
     serializer_class = serializers.ProductListByCategorySerializer
     # permission_classes = [permissions.IsAuthenticated]
@@ -55,7 +62,7 @@ class ProductListByCategory(generics.ListCreateAPIView):
 
 
 
-class ProductSearchList(generics.ListCreateAPIView):
+class ProductSearchViewSet(viewsets.ModelViewSet):
     queryset = models.Products.objects.all()
     search_fields = ['title', 'category__title']
     filter_backends = (filters.SearchFilter,)
@@ -68,48 +75,34 @@ class ProductSearchList(generics.ListCreateAPIView):
 
 
 
-class CategoryList(generics.ListCreateAPIView):
-    queryset = models.ProductCategory.objects.all()
-    
-    serializer_class = serializers.CategoryListSerializer
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = models.ProductCategory.objects.all() 
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return serializers.CategoryDetailSerializer
+        return serializers.CategoryListSerializer    
+
     # permission_classes = [permissions.IsAuthenticated]
 
 
 
-class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.ProductCategory.objects.all()
-    serializer_class = serializers.CategoryDetailSerializer
-    # permission_classes = [permissions.IsAuthenticated]
-
-
-
-
-
-class CustomerList(generics.ListCreateAPIView):
+class CustomerViewSet(viewsets.ModelViewSet):
     queryset = models.Customer.objects.all()
-    serializer_class = serializers.CustomerListSerializer
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return serializers.CustomerDetailSerializer
+        return serializers.CustomerListSerializer    
+
     # permission_classes = [permissions.IsAuthenticated]
 
 
 
-class CustomerDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.Customer.objects.all()
-    serializer_class = serializers.CustomerDetailSerializer
-    # permission_classes = [permissions.IsAuthenticated]
-
-
-class OrderList(generics.ListCreateAPIView):
+class OrderViewSet(viewsets.ModelViewSet):
     queryset = models.Order.objects.all()
     serializer_class = serializers.OrderListSerializer
     pagination_class = pagination.LimitOffsetPagination
     # permission_classes = [permissions.IsAuthenticated]
 
-
-
-class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.Order.objects.all()
-    serializer_class = serializers.OrderDetailSerializer
-    # permission_classes = [permissions.IsAuthenticated]
 
 # class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
 #     # queryset = models.Order.objects.all()
@@ -121,23 +114,14 @@ class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
 #         return order
 
 
-class OrderItemsList(generics.ListCreateAPIView):
+class OrderItemsViewSet(viewsets.ModelViewSet):
     queryset = models.OrderItems.objects.all()
     serializer_class = serializers.OrderItemsListSerializer
      
 
-
-
-class OrderItemsDetail(generics.ListAPIView):
-    queryset = models.OrderItems.objects.all()
-    serializer_class = serializers.OrderItemsDetailSerializer
-    # permission_classes = [permissions.IsAuthenticated]
-
 class CustomerAddressViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.CustomerAddressSerializer
     queryset = models.CustomerAddress.objects.all()
-
-
 
 
 class ProductRatingViewSet(viewsets.ModelViewSet):
