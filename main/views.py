@@ -1,10 +1,11 @@
-
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from rest_framework import generics,permissions, pagination, viewsets
 from . import serializers
 from . import models
 from . models import Products
 from rest_framework import filters
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 
@@ -16,6 +17,18 @@ class VendorViewSet(viewsets.ModelViewSet):
             return serializers.VendorDetailSerializer
         return serializers.VendorSerializer    
     # permission_classes = [permissions.IsAuthenticated]
+
+@csrf_exempt
+def vendor_login(request):
+    if request.method == 'POST':
+
+       email = request.POST['email']
+       password = request.POST['password']
+       vendorData = models.Vendor.objects.get(email=email, password=password)
+       if vendorData:
+          return JsonResponse({'bool': True})
+       else:
+          return JsonResponse({'bool': False})  
 
 
 
@@ -94,6 +107,16 @@ class CustomerViewSet(viewsets.ModelViewSet):
         return serializers.CustomerListSerializer    
 
     # permission_classes = [permissions.IsAuthenticated]
+@csrf_exempt
+def customer_login(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        customerData = models.Customer.objects.get(email=email, password=password)
+        if customerData:
+            return JsonResponse({'bool':True})
+        else:
+            return JsonResponse({'bool': False})    
 
 
 

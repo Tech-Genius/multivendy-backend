@@ -20,7 +20,10 @@ class Vendor(models.Model):
         if self.first_name:
             return self.first_name
         else:
-            return self.address    
+            return self.address   
+
+    class Meta:
+        verbose_name_plural = "1: Vendors"       
     
 
 
@@ -34,6 +37,9 @@ class ProductCategory(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name_plural = "2: Product Categories"     
 
 #products
 class Products(models.Model):
@@ -53,7 +59,9 @@ class Products(models.Model):
         return self.title
     class Meta:
        ordering = ['date_added'] 
-        
+
+    class Meta:
+        verbose_name_plural = "3: Products" 
 
 
 #customer
@@ -70,7 +78,9 @@ class Customer(models.Model):
            return self.first_name
         else:
             return self.phone
-        
+
+    class Meta:
+        verbose_name_plural = "4: Customers"       
 
 #order
 class Order(models.Model):
@@ -80,7 +90,11 @@ class Order(models.Model):
     def __unicode__(self):
         return '%s' % (self.order_time)
 
+    class Meta:
+        verbose_name_plural = "5: Orders" 
 
+
+#orderitems
 class OrderItems(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name ='order_items')
     product = models.ForeignKey(Products, on_delete=models.CASCADE)
@@ -88,6 +102,10 @@ class OrderItems(models.Model):
     def __str__(self):
         return self.product.title
  
+    class Meta:
+        verbose_name_plural = "6: Order Items"
+
+
 #customer address
 class CustomerAddress(models.Model):
     customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name ='customer_addresses')
@@ -96,6 +114,9 @@ class CustomerAddress(models.Model):
 
     def __str__(self):
         return self.address
+
+    class Meta:
+        verbose_name_plural = "7: Customer Addresses"       
 
 #rating and reviews
 
@@ -109,3 +130,6 @@ class ProductRating(models.Model):
     
     def __str__(self):
         return f'{self.rating} - {self.reviews}'
+
+    class Meta:
+        verbose_name_plural = "8: Product Ratings"

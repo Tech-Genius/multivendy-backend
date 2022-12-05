@@ -11,7 +11,7 @@ router.register('product-rating', views.ProductRatingViewSet)
 router.register('store', views.ProductViewSet)
 router.register('categories', views.CategoryViewSet)
 router.register('vendors', views.VendorViewSet)
-router.register('customer', views.CustomerViewSet)
+router.register('customers', views.CustomerViewSet)
 router.register('orders', views.OrderViewSet)
 router.register('order-items', views.OrderItemsViewSet)
 router.register('search', views.ProductSearchViewSet)
@@ -19,8 +19,11 @@ router.register('store-filter', views.ProductListByCategoryViewSet)
 
   
 urlpatterns = [
+
+
     
-    # path('store/', views.ProductList.as_view()),
+    path('vendor-login', views.vendor_login),
+    path('customer-login', views.customer_login)
     # path('store-filter/', views.ProductListByCategory.as_view()),
     # path('product/<int:pk>', views.ProductDetail.as_view()),
     # path('categories/', views.CategoryList.as_view()),

@@ -62,7 +62,7 @@ class CategoryDetailSerializer(serializers.ModelSerializer):
 class CustomerListSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Customer
-        fields = ['first_name', 'last_name', 'email', 'password']         
+        fields = ['first_name', 'last_name', 'email', 'password', 'phone', 'address']         
 
 
 class CustomerDetailSerializer(serializers.ModelSerializer):
