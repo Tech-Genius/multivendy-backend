@@ -21,7 +21,7 @@ class VendorDetailSerializer(serializers.ModelSerializer):
 class ProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Products
-        fields = ['id','category', 'vendor', 'title', 'price','image', 'date_added']         
+        fields = ['id','category', 'vendor', 'title', 'price','image', 'date_added', 'featured_image1', 'featured_image2', 'featured_image3', 'featured_image4']         
 
 
 class ProductDetailSerializer(serializers.ModelSerializer):

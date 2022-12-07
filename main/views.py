@@ -70,7 +70,7 @@ class ProductListByCategoryViewSet(viewsets.ModelViewSet):
         qs = super().get_queryset()
         category = self.request.GET['category']
         category = models.ProductCategory.objects.get(id=category)
-        qs = qs.filter(category=category)
+        qs = qs.filter(category=category).order_by('-date_added')
         return qs
 
 
