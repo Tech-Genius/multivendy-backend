@@ -91,13 +91,13 @@ WSGI_APPLICATION = 'backend_api.wsgi.application'
 # DATABASES = ['default'].update(db_from_env)
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'multivendor',
-        'USER': 'postgres',
-        'PASSWORD': 'wale2003',
-        'HOST': '127.0.0.1',
-        'PORT': '5432'
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'multivendor',
+    #     'USER': 'postgres',
+    #     'PASSWORD': 'wale2003',
+    #     'HOST': '127.0.0.1',
+    #     'PORT': '5432'
 
     }
 }
