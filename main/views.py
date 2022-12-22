@@ -31,7 +31,7 @@ def vendor_login(request):
           return JsonResponse({'bool': False})  
 
 
-
+# all product
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = models.Products.objects.all().order_by('-date_added')
     def get_serializer_class(self):
@@ -40,7 +40,19 @@ class ProductViewSet(viewsets.ModelViewSet):
         return serializers.ProductListSerializer 
 
 
+# specific vendor course
 
+class VendorProductsViewSet(generics.ListAPIView):
+    serializer_class = serializers.ProductListSerializer
+    def get_queryset(self):
+        vendor_id = self.kwargs['vendor_id']
+        vendor = models.Vendor.objects.get(pk=vendor_id)
+        return models.Vendor.objects.filter(password=vendor)
+
+
+
+
+# related product
 class RelatedProductDetailViewSet(generics.ListAPIView):
     serializer_class = serializers.ProductDetailSerializer
     def get_queryset(self):
@@ -75,6 +87,21 @@ class ProductListByCategoryViewSet(viewsets.ModelViewSet):
 
 
 
+#tags
+class TagProductsList(generics.ListCreateAPIView):
+    queryset = models.Products.objects.all()
+    serializer_class = serializers.ProductListSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        tag = self.kwargs['tag']
+        qs = qs.filter(tags__icontains=tag).order_by('-date_added')
+        return qs
+
+
+
+#search
 class ProductSearchViewSet(viewsets.ModelViewSet):
     queryset = models.Products.objects.all()
     search_fields = ['title', 'category__title']

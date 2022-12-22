@@ -1,5 +1,3 @@
-
-from pyexpat import model
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -20,7 +18,7 @@ class Vendor(models.Model):
         if self.first_name:
             return self.first_name
         else:
-            return self.address   
+            return self.phone   
 
     class Meta:
         verbose_name_plural = "1: Vendors"       
@@ -46,12 +44,13 @@ class Products(models.Model):
     category = models.ManyToManyField(ProductCategory, related_name='category_products' )
     vendor= models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=200)
-    detail = models.TextField(null=False, default='detail')
+    detail = models.TextField(null=True)
     price = models.FloatField()
+    tags = models.TextField(null=True)
     image = models.ImageField(upload_to='store-images', null=True)
     date_added = models.DateTimeField(auto_now_add=True, null = True)
-    featured_image1 = models.ImageField(upload_to='featured-images', null=True)
-    featured_image2 = models.ImageField(upload_to='featured-images', null=True)
+    featured_image1 = models.ImageField(upload_to='featured-images', null=True,blank=True)
+    featured_image2 = models.ImageField(upload_to='featured-images', null=True,blank=True)
     featured_image3 = models.ImageField(upload_to='featured-images', null=True, blank=True)
     featured_image4 = models.ImageField(upload_to='featured-images', null=True, blank=True)
 
@@ -59,6 +58,10 @@ class Products(models.Model):
         return self.title
     class Meta:
        ordering = ['date_added'] 
+
+    def tag_list (self):
+        tagList =self.tags.split(',')
+        return tagList  
 
     class Meta:
         verbose_name_plural = "3: Products" 

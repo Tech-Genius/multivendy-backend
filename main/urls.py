@@ -23,7 +23,10 @@ urlpatterns = [
 
     
     path('vendor-login', views.vendor_login),
-    path('customer-login', views.customer_login)
+    path('customer-login', views.customer_login),
+    path('vendor-products/<int:vendor_id>', views.VendorProductsViewSet.as_view()),
+    path('store/tags/<str:tag>', views.TagProductsList.as_view())
+    
     # path('store-filter/', views.ProductListByCategory.as_view()),
     # path('product/<int:pk>', views.ProductDetail.as_view()),
     # path('categories/', views.CategoryList.as_view()),
