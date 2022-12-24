@@ -10,4 +10,4 @@ python manage.py sqlflush | python manage.py dbshell
 # from django.contrib.contenttypes.models import ContentType
 # ContentType.objects.all().delete()
 # exit()
-python manage.py loaddata datadump.json
+python manage.py loaddata latest.json
