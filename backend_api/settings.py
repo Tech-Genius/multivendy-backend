@@ -30,9 +30,9 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['multivendy-backend-production.up.railway.app', 'localhost', '.vercel.app']
+ALLOWED_HOSTS = []
 
-CSRF_TRUSTED_ORIGINS = ['https://multivendy-backend-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = []
 # Application definition
 
 INSTALLED_APPS = [
@@ -51,8 +51,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
