@@ -25,6 +25,7 @@ urlpatterns = [
     path('vendor-login', views.vendor_login),
     path('customer-login', views.customer_login),
     path('vendor-products/<int:vendor_id>', views.VendorProductsViewSet.as_view()),
+    path('related-product/<int:pk>', views.RelatedProductList.as_view()),
     path('store/tags/<str:tag>', views.TagProductsList.as_view())
     
     # path('store-filter/', views.ProductListByCategory.as_view()),

@@ -41,7 +41,7 @@ class ProductCategory(models.Model):
 
 #products
 class Products(models.Model):
-    category = models.ManyToManyField(ProductCategory, related_name='category_products' )
+    category = models.ForeignKey(ProductCategory, related_name='category_products', null=True, on_delete=models.CASCADE )
     vendor= models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=200)
     detail = models.TextField(null=True)

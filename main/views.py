@@ -53,10 +53,15 @@ class VendorProductsViewSet(generics.ListAPIView):
 
 
 # related product
-class RelatedProductDetailViewSet(generics.ListAPIView):
+class RelatedProductList(generics.ListCreateAPIView):
+    queryset = models.Products.objects.all()
     serializer_class = serializers.ProductDetailSerializer
     def get_queryset(self):
-        return models.Products.objects.filter(category__id=self.kwargs['category__id'])
+        qs = super().get_queryset()
+        product_id = self.kwargs['pk']
+        product = models.Products.objects.get(id = product_id)
+        qs = qs.filter(category=product.category).exclude(id=product_id)
+        return qs
 
 
 
@@ -91,6 +96,7 @@ class ProductListByCategoryViewSet(viewsets.ModelViewSet):
 class TagProductsList(generics.ListCreateAPIView):
     queryset = models.Products.objects.all()
     serializer_class = serializers.ProductListSerializer
+    pagination_class= pagination.PageNumberPagination
     # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
