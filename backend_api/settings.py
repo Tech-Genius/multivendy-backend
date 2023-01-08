@@ -98,7 +98,6 @@ WSGI_APPLICATION = 'backend_api.wsgi.application'
 #         'PASSWORD': 'wale2003',
 #         'HOST': '127.0.0.1',
 #         'PORT': '5432'
-
 #     }
 # }
 
@@ -108,9 +107,13 @@ WSGI_APPLICATION = 'backend_api.wsgi.application'
 #     "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
 # }
 
+
+
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
 }
+
+
 
 # DATABASES = {
 #     'default': {

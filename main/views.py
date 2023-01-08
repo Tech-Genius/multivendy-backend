@@ -26,7 +26,7 @@ def vendor_login(request):
        password = request.POST['password']
        vendorData = models.Vendor.objects.get(email=email, password=password)
        if vendorData:
-          return JsonResponse({'bool': True})
+          return JsonResponse({'bool': True, 'vendor_id': vendorData.id, 'vendor_first_name': vendorData.first_name,})
        else:
           return JsonResponse({'bool': False})  
 
@@ -47,7 +47,7 @@ class VendorProductsViewSet(generics.ListAPIView):
     def get_queryset(self):
         vendor_id = self.kwargs['vendor_id']
         vendor = models.Vendor.objects.get(pk=vendor_id)
-        return models.Vendor.objects.filter(password=vendor)
+        return models.Products.objects.filter(vendor=vendor)
 
 
 
