@@ -60,9 +60,11 @@ class CategoryDetailSerializer(serializers.ModelSerializer):
         
 
 class CustomerListSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(min_length=6, write_only=True)
     class Meta:
         model = models.Customer
-        fields = ['first_name', 'last_name', 'email', 'password', 'phone', 'address']         
+        fields = ['first_name', 'last_name', 'email', 'password', 'phone', 'address']
+        extra_kwargs = {'password': {'write_only': True}}         
 
 
 class CustomerDetailSerializer(serializers.ModelSerializer):

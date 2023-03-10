@@ -6,6 +6,7 @@ from . import models
 from . models import Products
 from rest_framework import filters
 from django.views.decorators.csrf import csrf_exempt
+
 # Create your views here.
 
 
@@ -18,17 +19,36 @@ class VendorViewSet(viewsets.ModelViewSet):
         return serializers.VendorSerializer    
     # permission_classes = [permissions.IsAuthenticated]
 
+
+
 @csrf_exempt
 def vendor_login(request):
     if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        try:
+            vendorData = models.Vendor.objects.get(email=email, password=password)
 
-       email = request.POST['email']
-       password = request.POST['password']
-       vendorData = models.Vendor.objects.get(email=email, password=password)
-       if vendorData:
-          return JsonResponse({'bool': True, 'vendor_id': vendorData.id, 'vendor_first_name': vendorData.first_name,})
-       else:
-          return JsonResponse({'bool': False})  
+            return JsonResponse({'status': "succesfull", 'vendor_id': vendorData.id, 'vendor_first_name': vendorData.first_name})
+        except models.Vendor.DoesNotExist:
+            # Handle the error when a Vendor object is not found
+            return JsonResponse({'status': "failed"})
+
+
+
+@csrf_exempt
+def customer_login(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        try:
+            customerData = models.Customer.objects.get(email=email, password=password)
+            return JsonResponse({'status':"succesfull", 'customer_id':customerData.id, 'customer_first_name':customerData.first_name})
+        except models.Customer.DoesNotExist:
+             # Handle the error when a Customer object is not found
+            return JsonResponse({'status':"failed"})         
+
+
 
 
 # all product
@@ -41,7 +61,6 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 # specific vendor course
-
 class VendorProductsViewSet(generics.ListAPIView):
     serializer_class = serializers.ProductListSerializer
     def get_queryset(self):
@@ -137,20 +156,19 @@ class CustomerViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == 'retrieve':
             return serializers.CustomerDetailSerializer
-        return serializers.CustomerListSerializer    
+        return serializers.CustomerListSerializer  
+    
+    def create_customer(self, request):
+        serializer = serializers.CustomerListSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({'status' : 'successful', "message" : "Account Creation Succesfull"})
+        else:
+            if 'password' in serializer.errors:
+                return JsonResponse({"message":'Password must be at least 6 characters long.'})
+        return JsonResponse({'status':"Failed", "message":"Account Creation Failed"})      
 
     # permission_classes = [permissions.IsAuthenticated]
-@csrf_exempt
-def customer_login(request):
-    if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
-        customerData = models.Customer.objects.get(email=email, password=password)
-        if customerData:
-            return JsonResponse({'bool':True})
-        else:
-            return JsonResponse({'bool': False})    
-
 
 
 class OrderViewSet(viewsets.ModelViewSet):
