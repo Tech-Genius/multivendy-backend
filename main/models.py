@@ -55,7 +55,7 @@ class Vendor(models.Model):
         if self.first_name:
             return self.first_name
         else:
-            return self.phone   
+            return self.email   
 
     class Meta:
         verbose_name_plural = "1: Vendors"       
@@ -126,7 +126,7 @@ class Customer(models.Model):
         if self.first_name:
            return self.first_name
         else:
-            return self.phone
+            return self.email
         
     def has_perm(self, perm, obj=None):
         return True
